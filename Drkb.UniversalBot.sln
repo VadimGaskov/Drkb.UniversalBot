@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Drkb.UniversalBot", "Drkb.UniversalBot\Drkb.UniversalBot.csproj", "{66F91699-659E-46FF-9CE0-BB08E609F078}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Drkb.UniversalBot.Domain", "Drkb.UniversalBot.Domain\Drkb.UniversalBot.Domain.csproj", "{8A1CF17F-3548-458C-A8CF-0D864AE0950D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Drkb.UniversalBot.Application", "Drkb.UniversalBot.Application\Drkb.UniversalBot.Application.csproj", "{73BB74A0-202B-435B-9E43-AE16691E5F99}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Drkb.UniversalBot.Infrastructure", "Drkb.UniversalBot.Infrastructure\Drkb.UniversalBot.Infrastructure.csproj", "{38E235B5-ECFB-47B1-8B2F-F00EF5E12812}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{66F91699-659E-46FF-9CE0-BB08E609F078}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66F91699-659E-46FF-9CE0-BB08E609F078}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66F91699-659E-46FF-9CE0-BB08E609F078}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66F91699-659E-46FF-9CE0-BB08E609F078}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A1CF17F-3548-458C-A8CF-0D864AE0950D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A1CF17F-3548-458C-A8CF-0D864AE0950D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A1CF17F-3548-458C-A8CF-0D864AE0950D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A1CF17F-3548-458C-A8CF-0D864AE0950D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{73BB74A0-202B-435B-9E43-AE16691E5F99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{73BB74A0-202B-435B-9E43-AE16691E5F99}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{73BB74A0-202B-435B-9E43-AE16691E5F99}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{73BB74A0-202B-435B-9E43-AE16691E5F99}.Release|Any CPU.Build.0 = Release|Any CPU
+		{38E235B5-ECFB-47B1-8B2F-F00EF5E12812}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38E235B5-ECFB-47B1-8B2F-F00EF5E12812}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38E235B5-ECFB-47B1-8B2F-F00EF5E12812}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38E235B5-ECFB-47B1-8B2F-F00EF5E12812}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

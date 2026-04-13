@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <RootNamespace>Drkb.UniversalBot.Application</RootNamespace>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Drkb.CacheService.Abstractions" Version="1.0.3" />
+      <PackageReference Include="Drkb.ResultObjects" Version="1.0.1" />
+      <PackageReference Include="MediatR" Version="12.5.0" />
+      <PackageReference Include="MessageBroker.Abstractions" Version="2.0.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Drkb.UniversalBot.Domain\Drkb.UniversalBot.Domain.csproj" />
+    </ItemGroup>
+
+</Project>
