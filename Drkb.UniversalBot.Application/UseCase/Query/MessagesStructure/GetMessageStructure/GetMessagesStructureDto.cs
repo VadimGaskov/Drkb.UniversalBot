@@ -4,7 +4,7 @@ namespace Drkb.UniversalBot.Application.UseCase.Query.MessagesStructure.GetMessa
 
 public record MessagesStructureDto
 {
-    public string? Title { get; set; }
+    public string? Name { get; set; }
     public string? Value { get; set; }
     public int Seq { get; set; }
     public TypeField TypeField { get; set; }

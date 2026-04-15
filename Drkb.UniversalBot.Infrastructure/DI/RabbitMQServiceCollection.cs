@@ -13,7 +13,7 @@ public static class RabbitMQServiceCollection
         {
             configure.ConfigureConsumer(x =>
             {
-                x.Bind<MessageEvent>(
+                x.Bind<VkMessageEvent>(
                     exchange: "messages-events",
                     queueName: "bot.messages-events.created",
                     routingKey: "messages-events.created");
@@ -21,7 +21,7 @@ public static class RabbitMQServiceCollection
             
             configure.ConfigureProducer(x =>
             {
-                x.Map<MessageEvent>(
+                x.Map<VkMessageEvent>(
                     exchange: "messages-events",
                     routingKey: "messages-events.created");
             });

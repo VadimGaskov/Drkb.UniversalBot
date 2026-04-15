@@ -32,4 +32,8 @@
       <ProjectReference Include="..\Drkb.UniversalBot.Domain\Drkb.UniversalBot.Domain.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Data\DataProviders\MessagesStructure\" />
+    </ItemGroup>
+
 </Project>

@@ -134,14 +134,11 @@ namespace Drkb.UniversalBot.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("CategoryId")
+                    b.Property<Guid?>("CategoryId")
                         .HasColumnType("uuid");
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("timestamp with time zone");
-
-                    b.Property<int>("EventId")
-                        .HasColumnType("integer");
 
                     b.Property<Guid>("SenderUserId")
                         .HasColumnType("uuid");
@@ -191,9 +188,7 @@ namespace Drkb.UniversalBot.Infrastructure.Migrations
                 {
                     b.HasOne("Drkb.UniversalBot.Domain.Entity.Category", "Category")
                         .WithMany("Statistics")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CategoryId");
 
                     b.HasOne("Drkb.UniversalBot.Domain.Entity.SenderUser", "SenderUser")
                         .WithMany("Statistics")

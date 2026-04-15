@@ -4,7 +4,7 @@ using MessageBroker.Abstractions;
 
 namespace Drkb.UniversalBot.Application.Events;
 
-public record MessageEvent: BaseIntegrationEvent
+public record VkMessageEvent: BaseIntegrationEvent
 {
     [JsonPropertyName("type")]
     public string Type { get; set; } = string.Empty;

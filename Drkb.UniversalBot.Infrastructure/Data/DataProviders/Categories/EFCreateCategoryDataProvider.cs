@@ -1,5 +1,4 @@
-using Drkb.UniversalBot.Application.UseCase.Command.CategoryCases;
-using Drkb.UniversalBot.Application.UseCase.Command.CategoryCases.CreateCategory;
+using Drkb.UniversalBot.Application.UseCase.Command.MessagesStructure.CreateMessageStructure;
 using Drkb.UniversalBot.Domain.Entity;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,13 +13,18 @@ public class EFCreateCategoryDataProvider: ICreateCategoryDataProvider
         _context = context;
     }
 
-    public async Task AddAsync(Category entity, CancellationToken cancellationToken = default)
+    public async Task AddCategoryAsync(Category category, CancellationToken cancellationToken)
     {
-        await _context.Categories.AddAsync(entity, cancellationToken);
+        await _context.Categories.AddAsync(category, cancellationToken);
     }
 
-    public async Task<Category?> GetByIdAsync(Guid id, CancellationToken cancellationToken)
+    public async Task AddMessageStructuresDataAsync(List<MessageStructure> data, CancellationToken cancellationToken)
     {
-        return await _context.Categories.FirstOrDefaultAsync(x=>x.Id == id, cancellationToken);
+        await _context.MessageStructures.AddRangeAsync(data, cancellationToken);
+    }
+    
+    public async Task<Category?> GetCategoryByIdAsync(Guid? categoryId, CancellationToken ct)
+    {
+        return await _context.Categories.FirstOrDefaultAsync(x=>x.Id == categoryId, ct);
     }
 }
