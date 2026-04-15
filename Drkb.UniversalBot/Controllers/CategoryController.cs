@@ -48,7 +48,6 @@ public class CategoryController: ControllerBase
     [Consumes("multipart/form-data")]
     public async Task<ActionResult> Create([FromForm] CreateCategoryRequest request, CancellationToken cancellationToken)
     {
-        
         var payloads = new List<CreateMessageStructurePayload>();
         foreach (var item in request.Items)
         {
