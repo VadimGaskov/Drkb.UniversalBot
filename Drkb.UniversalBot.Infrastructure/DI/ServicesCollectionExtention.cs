@@ -40,6 +40,16 @@ public static class ServicesCollectionExtention
         services.AddTransient<IVkKeyboardFactory, VkKeyboardFactory>();
 
         services.RegisterRedis(configuration.GetSection("Redis"));
+
+        services.AddScoped<IVkMessageEventProcessor, VkMessageEventProcessor>();
+        services.AddScoped<IVkMessageNewProcessor, VkMessageNewProcessor>();
+        
+        services.AddControllers()
+            .AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.Converters
+                    .Add(new JsonStringEnumConverter());
+            });
         
         return services;
     }

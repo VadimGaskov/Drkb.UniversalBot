@@ -23,7 +23,7 @@ public class EFMessagesStructureQuery: IMessagesStructureQuery
                 MessagesStructureDtos = x.StructureOfMessages.Select(sm => new MessagesStructureDto
                 {
                     Seq = sm.Seq,
-                    Title = sm.Title,
+                    Name = sm.Title,
                     Value = sm.Value,
                     TypeField = sm.TypeField,
                     OriginalFileName = sm.OriginalFileName

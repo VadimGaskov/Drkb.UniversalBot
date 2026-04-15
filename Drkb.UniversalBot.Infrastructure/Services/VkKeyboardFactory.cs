@@ -1,6 +1,5 @@
 using System.Text.Json;
 using Drkb.UniversalBot.Application.Interfaces.VkIntegration;
-using Drkb.UniversalBot.Application.UseCase.Query.CategoryCases.GetCategories;
 using Drkb.UniversalBot.Domain.Entity;
 
 namespace Drkb.UniversalBot.Infrastructure.Services;

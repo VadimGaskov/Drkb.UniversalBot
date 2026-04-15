@@ -1,5 +1,6 @@
 using Drkb.UniversalBot.Application.Events;
 using Drkb.UniversalBot.Infrastructure.Services.MessageBrocker.MessageEvents;
+using Drkb.UniversalBot.Infrastructure.Services.MessageBrocker.MessageEvents.Vk;
 using MessageBroker.Abstractions.Interfaces.Consumer;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -9,7 +10,7 @@ public static class EventHandlerServiceCollectionExtention
 {
     public static IServiceCollection AddEventHandlers(this IServiceCollection services)
     {
-        services.AddScoped<IEventHandler<MessageEvent>, CreateMessageEventHandler>();
+        services.AddScoped<IEventHandler<VkMessageEvent>, CreateMessageEventHandler>();
         return services;
     }
 }

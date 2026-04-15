@@ -1,19 +1,19 @@
-using Drkb.UniversalBot.Application.UseCase.Query.CategoryCases.GetCategories;
+using Drkb.UniversalBot.Application.UseCase.Query.CategoryCases.GetCategoriesTree;
 using Drkb.UniversalBot.Domain.Entity;
 using Microsoft.EntityFrameworkCore;
 
 namespace Drkb.UniversalBot.Infrastructure.Data.QueryObjects.Categories;
 
-public class EFCategoriesQuery: ICategoriesQuery
+public class EfCategoriesTreeQuery: ICategoriesTreeQuery
 {
     private readonly BotDbContext _context;
 
-    public EFCategoriesQuery(BotDbContext context)
+    public EfCategoriesTreeQuery(BotDbContext context)
     {
         _context = context;
     }
 
-    public async Task<List<CategoriesDto>> ExecuteAsync(GetCategoriesQuery query, CancellationToken cancellationToken = default)
+    public async Task<List<CategoriesTreeDto>> ExecuteAsync(GetCategoriesTreeQuery treeQuery, CancellationToken cancellationToken = default)
     {
         var categories = await _context.Categories
             .AsNoTracking()
@@ -40,16 +40,16 @@ public class EFCategoriesQuery: ICategoriesQuery
             .ToList();
     }
 
-    private CategoriesDto MapCategoryTree(Category category, HashSet<Guid> visited)
+    private CategoriesTreeDto MapCategoryTree(Category category, HashSet<Guid> visited)
     {
         if (!visited.Add(category.Id))
             throw new InvalidOperationException(
                 $"Обнаружен цикл в дереве категорий. CategoryId: {category.Id}");
 
-        return new CategoriesDto
+        return new CategoriesTreeDto
         {
             Id = category.Id,
-            Title = category.Title,
+            Name = category.Title,
             CategoryChildren = category.ChildrenCategories
                 .Select(child => MapCategoryTree(child, new HashSet<Guid>(visited)))
                 .ToList()

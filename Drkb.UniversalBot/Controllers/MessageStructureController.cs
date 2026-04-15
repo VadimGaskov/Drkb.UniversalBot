@@ -17,50 +17,5 @@ public class MessageStructureController: ControllerBase
         _mediator = mediator;
     }
     
-
-    [HttpPost]
-    [Consumes("multipart/form-data")]
-    public async Task<ActionResult> Create([FromForm] CreateMessageStructureRequest request, CancellationToken cancellationToken)
-    {
-        var payloads = new List<CreateMessageStructurePayload>();
-        foreach (var item in request.Items)
-        {
-            AppFile? appFile = null;
-
-            if (item.File is not null)
-            {
-                await using var stream = item.File.OpenReadStream();
-                using var memoryStream = new MemoryStream();
-
-                await stream.CopyToAsync(memoryStream, cancellationToken);
-
-                appFile = new AppFile
-                {
-                    FileName = item.File.FileName,
-                    ContentType = item.File.ContentType,
-                    Content = memoryStream.ToArray(),
-                    Length = item.File.Length
-                };
-            }
-
-            payloads.Add(new CreateMessageStructurePayload
-            {
-                Title = item.Title,
-                Value = item.Value,
-                Seq = item.Seq,
-                TypeField = item.TypeField,
-                File = appFile
-            });
-        }
-
-        var command = new CreateMessageStructureCommand
-        {
-            CategoryId = request.CategoryId,
-            Payloads = payloads
-        };
-
-        var result = await _mediator.Send(command, cancellationToken);
-
-        return result.IsSuccess ? Ok(result) : BadRequest(result);
-    }
+    
 }

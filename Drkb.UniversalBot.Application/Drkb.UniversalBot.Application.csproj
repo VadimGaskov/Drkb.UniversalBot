@@ -18,4 +18,8 @@
       <ProjectReference Include="..\Drkb.UniversalBot.Domain\Drkb.UniversalBot.Domain.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="UseCase\Command\MessagesStructure\" />
+    </ItemGroup>
+
 </Project>

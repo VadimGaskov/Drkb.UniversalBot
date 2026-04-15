@@ -21,7 +21,7 @@ public class UpdateCategoryHandler: IRequestHandler<UpdateCategoryCommand, Resul
         if (category is null)
             return Result.NotFound("Category doesn't exist");
 
-        category.Title = request.Title;
+        category.Title = request.Name;
         if (request.ParentCategoryId is null)
             category.ParentCategory = null;
         else
