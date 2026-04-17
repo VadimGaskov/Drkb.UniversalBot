@@ -5,22 +5,22 @@ namespace Drkb.UniversalBot.Application.UseCase.Command.Statistics.CreateStatist
 
 public class CreateStatisticsEventHandler: INotificationHandler<CreateStatisticsEvent>
 {
-    private readonly ICreateStatisticsDataProvider _createStatisticsDataProvider;
+    private readonly ICreateStatisticsPort _createStatisticsPort;
     private readonly IUnitOfWork _unitOfWork;
 
-    public CreateStatisticsEventHandler(ICreateStatisticsDataProvider createStatisticsDataProvider, IUnitOfWork unitOfWork)
+    public CreateStatisticsEventHandler(ICreateStatisticsPort createStatisticsPort, IUnitOfWork unitOfWork)
     {
-        _createStatisticsDataProvider = createStatisticsDataProvider;
+        _createStatisticsPort = createStatisticsPort;
         _unitOfWork = unitOfWork;
     }
 
     public async Task Handle(CreateStatisticsEvent notification, CancellationToken cancellationToken)
     {
-        var user = await _createStatisticsDataProvider.CreateUserAsync(notification.UserId, notification.Messenger);
+        var user = await _createStatisticsPort.CreateUserAsync(notification.UserId, notification.Messenger);
         if (notification.CategortyId is not null)
-            await _createStatisticsDataProvider.CreateStatisticsAsync(user, notification.CategortyId);
+            await _createStatisticsPort.CreateStatisticsAsync(user, notification.CategortyId);
         else
-            await _createStatisticsDataProvider.CreateStatisticsAsync(user);
+            await _createStatisticsPort.CreateStatisticsAsync(user);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
     }

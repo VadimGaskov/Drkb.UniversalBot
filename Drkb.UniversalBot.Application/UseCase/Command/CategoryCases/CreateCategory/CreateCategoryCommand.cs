@@ -2,20 +2,13 @@ using Drkb.ResultObjects;
 using Drkb.UniversalBot.Domain.Entity.ValueObjects;
 using MediatR;
 
-namespace Drkb.UniversalBot.Application.UseCase.Command.MessagesStructure.CreateMessageStructure;
-
-public record CreateMessageStructurePayload
-{
-    public string? Name { get; set; } = null!;
-    public string? Value { get; set; } = null!;
-    public AppFile? File { get; set; }
-    public int Seq { get; set; }
-    public TypeField TypeField { get; set; }
-} 
+namespace Drkb.UniversalBot.Application.UseCase.Command.CategoryCases.CreateCategory;
 
 public record CreateCategoryCommand: IRequest<Result>
 {
-    public string NameCategory { get; set; } = null!;
-    public Guid? ParentCategoryId { get; set; }
-    public List<CreateMessageStructurePayload> Payloads { get; set; } = [];
+    public string NameCategory { get; init; } = null!;
+    public string? Value { get; init; } = null!;
+    public Guid? ParentCategoryId { get; init; }
+    public Guid UploadContextId { get; set; }
+    public List<Guid> FileIds { get; set; }
 }

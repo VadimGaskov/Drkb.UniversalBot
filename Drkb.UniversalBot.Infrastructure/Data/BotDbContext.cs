@@ -9,7 +9,6 @@ public class BotDbContext: DbContext
     public DbSet<Category> Categories { get; set; }
     public DbSet<Recommendation> Recommendations { get; set; }
     public DbSet<Statistics> Statistics { get; set; }
-    public DbSet<MessageStructure> MessageStructures { get; set; }
     public DbSet<SenderUser> SenderUsers { get; set; }
     
     public BotDbContext(DbContextOptions<BotDbContext> options) : base(options)

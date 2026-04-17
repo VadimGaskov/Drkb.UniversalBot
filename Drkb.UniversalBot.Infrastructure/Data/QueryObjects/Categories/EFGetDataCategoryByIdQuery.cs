@@ -15,17 +15,14 @@ public class EFGetDataCategoryByIdQuery: IGetDataCategoryByIdQuery
 
     public async Task<GetDataCategoryByIdDto?> ExecuteAsync(GetDataCategoryByIdQuery query, CancellationToken cancellationToken = default)
     {
-        return await _context.Categories.Where(x => x.Id == query.CategoryId)
-            .Select(x => new GetDataCategoryByIdDto
+        return await _context.Categories
+            .Where(x=>x.Id == query.CategoryId && x.CategoryStatus == CategoryStatus.Active)
+            .Select(x=>new GetDataCategoryByIdDto
             {
-                Categories = x.ChildrenCategories,
-                PathFiles = x.StructureOfMessages
-                    .Where(sm => sm.TypeField == TypeField.File && sm.StoredFilePath != null)
-                    .Select(sm => sm.StoredFilePath).ToList(),
-                Text = x.StructureOfMessages
-                    .Where(sm => sm.TypeField == TypeField.Text)
-                    .Select(sm=>sm.Value)
-                    .FirstOrDefault(),
+                Categories = x.ChildrenCategories.Where(cc => cc.CategoryStatus == CategoryStatus.Active).ToList(),
+                CategoryId = x.Id,
+                Text = x.Title,
+                Value = x.Value
             }).FirstOrDefaultAsync(cancellationToken);
     }
 }

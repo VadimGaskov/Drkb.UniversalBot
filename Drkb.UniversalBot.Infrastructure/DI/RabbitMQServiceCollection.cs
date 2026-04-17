@@ -1,4 +1,6 @@
 ﻿using Drkb.UniversalBot.Application.Events;
+using Drkb.UniversalBot.Contracts.Category;
+using Drkb.UniversalBot.Integration.RabbitMq;
 using MessageBroker.RabbitMQ;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -24,6 +26,14 @@ public static class RabbitMQServiceCollection
                 x.Map<VkMessageEvent>(
                     exchange: "messages-events",
                     routingKey: "messages-events.created");
+                
+                x.Map<CategoryCreatedEvent>(
+                    exchange: CategoryIntegrationMetadata.Created.Exchange,
+                    routingKey: CategoryIntegrationMetadata.Created.RoutingKey);
+                
+                x.Map<CategoryUpdatedEvent>(
+                    exchange: CategoryIntegrationMetadata.Updated.Exchange,
+                    routingKey: CategoryIntegrationMetadata.Updated.RoutingKey);
             });
         });
         return services;

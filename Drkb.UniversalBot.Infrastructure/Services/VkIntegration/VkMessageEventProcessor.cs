@@ -72,10 +72,11 @@ public class VkMessageEventProcessor: IVkMessageEventProcessor
 
         var messageRequest = new VkSendMessageRequest()
         {
-            Text = data.Text,
+            Value = data.Value,
             PeerId = messageEvent.PeerId,
-            FilePaths = data.Files,
-            KeyboardPayload = data.Keyboard
+            KeyboardPayload = data.Keyboard,
+            Name = data.Name,
+            FilesUrl = data.FilesUrl,
         };
         
         await _vkMessageService.SendCompositeAsync(messageEvent.PeerId, messageRequest, cancellationToken);

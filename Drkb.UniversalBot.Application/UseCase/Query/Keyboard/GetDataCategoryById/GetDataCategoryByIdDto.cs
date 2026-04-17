@@ -4,7 +4,8 @@ namespace Drkb.UniversalBot.Application.UseCase.Query.Keyboard.GetDataCategoryBy
 
 public class GetDataCategoryByIdDto
 {
+    public Guid CategoryId { get; set; }
     public string? Text { get; set; }
+    public string? Value { get; set; }
     public List<Category> Categories { get; set; }
-    public List<string?> PathFiles { get; set; }
 }

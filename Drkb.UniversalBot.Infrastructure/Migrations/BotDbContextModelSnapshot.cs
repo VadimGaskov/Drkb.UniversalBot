@@ -28,48 +28,16 @@ namespace Drkb.UniversalBot.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<string>("CategoryStatus")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("text")
+                        .HasDefaultValue("Active");
+
                     b.Property<Guid?>("ParentCategoryId")
                         .HasColumnType("uuid");
 
                     b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ParentCategoryId");
-
-                    b.HasIndex("Title")
-                        .IsUnique();
-
-                    b.ToTable("Categories");
-                });
-
-            modelBuilder.Entity("Drkb.UniversalBot.Domain.Entity.MessageStructure", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("CategoryId")
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("ContentType")
-                        .HasColumnType("text");
-
-                    b.Property<string>("OriginalFileName")
-                        .HasColumnType("text");
-
-                    b.Property<int>("Seq")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("StoredFilePath")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Title")
-                        .HasColumnType("text");
-
-                    b.Property<string>("TypeField")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -78,12 +46,12 @@ namespace Drkb.UniversalBot.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CategoryId");
+                    b.HasIndex("ParentCategoryId");
 
-                    b.HasIndex("Title", "CategoryId")
+                    b.HasIndex("Title", "CategoryStatus")
                         .IsUnique();
 
-                    b.ToTable("MessageStructures");
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("Drkb.UniversalBot.Domain.Entity.Recommendation", b =>
@@ -162,17 +130,6 @@ namespace Drkb.UniversalBot.Infrastructure.Migrations
                     b.Navigation("ParentCategory");
                 });
 
-            modelBuilder.Entity("Drkb.UniversalBot.Domain.Entity.MessageStructure", b =>
-                {
-                    b.HasOne("Drkb.UniversalBot.Domain.Entity.Category", "Category")
-                        .WithMany("StructureOfMessages")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Category");
-                });
-
             modelBuilder.Entity("Drkb.UniversalBot.Domain.Entity.Recommendation", b =>
                 {
                     b.HasOne("Drkb.UniversalBot.Domain.Entity.SenderUser", "SenderUser")
@@ -206,8 +163,6 @@ namespace Drkb.UniversalBot.Infrastructure.Migrations
                     b.Navigation("ChildrenCategories");
 
                     b.Navigation("Statistics");
-
-                    b.Navigation("StructureOfMessages");
                 });
 
             modelBuilder.Entity("Drkb.UniversalBot.Domain.Entity.SenderUser", b =>

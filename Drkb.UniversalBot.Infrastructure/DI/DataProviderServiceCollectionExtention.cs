@@ -9,7 +9,7 @@ public static class DataProviderServiceCollectionExtention
     {
         service.Scan(scan => scan
             .FromAssemblyOf<InfrastructureAssemblyMarker>()
-            .AddClasses(classes => classes.AssignableTo<IDataProviderMarker>())
+            .AddClasses(classes => classes.AssignableTo<IPortMarker>())
             .AsImplementedInterfaces()
             .WithScopedLifetime()
         );

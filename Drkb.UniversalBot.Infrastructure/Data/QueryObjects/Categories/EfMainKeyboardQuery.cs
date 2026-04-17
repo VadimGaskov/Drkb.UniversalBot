@@ -2,6 +2,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Drkb.UniversalBot.Application.UseCase.Query.Keyboard.GetMainKeyboard;
 using Drkb.UniversalBot.Domain.Entity;
+using Drkb.UniversalBot.Domain.Entity.ValueObjects;
 using Drkb.UniversalBot.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 
@@ -20,7 +21,7 @@ public class EfMainKeyboardQuery: IMainKeyboardQuery
         CancellationToken cancellationToken = default)
     {
         var categories =
-            await _context.Categories.Where(x => x.ParentCategoryId == null).ToListAsync(cancellationToken);
+            await _context.Categories.Where(x => x.ParentCategoryId == null && x.CategoryStatus == CategoryStatus.Active).ToListAsync(cancellationToken);
 
         return categories;
     }

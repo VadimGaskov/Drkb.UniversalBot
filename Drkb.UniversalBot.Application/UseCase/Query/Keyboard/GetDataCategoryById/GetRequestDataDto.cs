@@ -2,7 +2,8 @@ namespace Drkb.UniversalBot.Application.UseCase.Query.Keyboard.GetDataCategoryBy
 
 public record GetRequestDataDto
 {
-    public string? Text { get; set; }
+    public string? Name { get; set; }
+    public string? Value { get; set; }
     public string? Keyboard { get; set; }
-    public List<string> Files { get; set; } = [];
+    public List<string> FilesUrl { get; set; } = [];
 }

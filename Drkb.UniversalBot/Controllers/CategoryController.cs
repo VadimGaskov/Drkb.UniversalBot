@@ -1,11 +1,9 @@
-using Drkb.UniversalBot.Application.UseCase.Command.CategoryCases;
 using Drkb.UniversalBot.Application.UseCase.Command.CategoryCases.CreateCategory;
+using Drkb.UniversalBot.Application.UseCase.Command.CategoryCases.DeleteCategory;
 using Drkb.UniversalBot.Application.UseCase.Command.CategoryCases.UpdateCategory;
-using Drkb.UniversalBot.Application.UseCase.Command.MessagesStructure.CreateMessageStructure;
 using Drkb.UniversalBot.Application.UseCase.Query.CategoryCases.GetCategories;
 using Drkb.UniversalBot.Application.UseCase.Query.CategoryCases.GetCategoriesTree;
-using Drkb.UniversalBot.Application.UseCase.Query.MessagesStructure.GetMessageStructure;
-using Drkb.UniversalBot.Models.RequestModels;
+using Drkb.UniversalBot.Application.UseCase.Query.CategoryCases.GetCategory;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -45,47 +43,8 @@ public class CategoryController: ControllerBase
     }
 
     [HttpPost]
-    [Consumes("multipart/form-data")]
-    public async Task<ActionResult> Create([FromForm] CreateCategoryRequest request, CancellationToken cancellationToken)
+    public async Task<ActionResult> Create(CreateCategoryCommand command, CancellationToken cancellationToken)
     {
-        var payloads = new List<CreateMessageStructurePayload>();
-        foreach (var item in request.Items)
-        {
-            AppFile? appFile = null;
-
-            if (item.File is not null)
-            {
-                await using var stream = item.File.OpenReadStream();
-                using var memoryStream = new MemoryStream();
-
-                await stream.CopyToAsync(memoryStream, cancellationToken);
-
-                appFile = new AppFile
-                {
-                    FileName = item.File.FileName,
-                    ContentType = item.File.ContentType,
-                    Content = memoryStream.ToArray(),
-                    Length = item.File.Length
-                };
-            }
-
-            payloads.Add(new CreateMessageStructurePayload
-            {
-                Name = item.Name,
-                Value = item.Value,
-                Seq = item.Seq,
-                TypeField = item.TypeField,
-                File = appFile
-            });
-        }
-
-        var command = new CreateCategoryCommand
-        {
-            NameCategory = request.NameCategory,
-            ParentCategoryId = request.ParentCategoryId,
-            Payloads = payloads
-        };
-
         var result = await _mediator.Send(command, cancellationToken);
 
         return result.IsSuccess ? Ok(result) : BadRequest(result);
@@ -103,18 +62,31 @@ public class CategoryController: ControllerBase
 
         return Ok();
     }
-
-    [HttpGet("{id:guid}/message-structure")]
-    public async Task<ActionResult<GetMessagesStructureDto>> GetMessageStructure(Guid id,
-        CancellationToken cancellationToken)
+    
+    [HttpGet("{id:guid}")]
+    public async Task<ActionResult<GetCategoryDto>> GetCategory(Guid id, CancellationToken cancellationToken)
     {
         if (id == Guid.Empty)
-            return BadRequest("Id is empty");
+            return BadRequest("Ids do not match");
         
-        var result = await _mediator.Send(new GetMessagesStructureQuery(id), cancellationToken);
+        var result = await _mediator.Send(new GetCategoryQuery(id), cancellationToken);
+
         if (!result.IsSuccess)
             return StatusCode(result.StatusCode, result.ErrorMessage);
 
         return result.Data;
+    }
+
+    [HttpDelete("{id:guid}")]
+    public async Task<IActionResult> Delete(Guid id, CancellationToken cancellationToken)
+    {
+        if (id == Guid.Empty)
+            return BadRequest("Id is empty");
+        
+        var result = await _mediator.Send(new DeleteCategoryCommand(id), cancellationToken);
+        if (!result.IsSuccess)
+            return StatusCode(result.StatusCode, result.ErrorMessage);
+
+        return Ok();
     }
 }

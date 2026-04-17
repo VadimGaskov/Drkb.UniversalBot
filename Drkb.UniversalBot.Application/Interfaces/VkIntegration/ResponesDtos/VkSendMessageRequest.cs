@@ -3,11 +3,12 @@ namespace Drkb.UniversalBot.Application.Interfaces.VkIntegration.ResponesDtos;
 public class VkSendMessageRequest
 {
     public long PeerId { get; init; }
-    public string? Text { get; init; }
+    public string? Value { get; init; }
+    public string? Name { get; set; }
     public string? KeyboardPayload { get; init; }
-    public IReadOnlyList<string> FilePaths { get; init; } = [];
+    public IReadOnlyList<string> FilesUrl { get; init; } = [];
 
-    public bool HasText => !string.IsNullOrWhiteSpace(Text);
+    public bool HasValue => !string.IsNullOrWhiteSpace(Value);
     public bool HasKeyboard => !string.IsNullOrWhiteSpace(KeyboardPayload);
-    public bool HasFiles => FilePaths is { Count: > 0 };
+    public bool HasFiles => FilesUrl is { Count: > 0 };
 }

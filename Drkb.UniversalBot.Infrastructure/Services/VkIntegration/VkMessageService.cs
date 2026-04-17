@@ -1,4 +1,5 @@
-﻿using Drkb.UniversalBot.Application.Interfaces.VkIntegration;
+﻿using Drkb.UniversalBot.Application.Interfaces.S3;
+using Drkb.UniversalBot.Application.Interfaces.VkIntegration;
 using Drkb.UniversalBot.Application.Interfaces.VkIntegration.ResponesDtos;
 
 namespace Drkb.UniversalBot.Infrastructure.Services.VkIntegration;
@@ -6,35 +7,35 @@ namespace Drkb.UniversalBot.Infrastructure.Services.VkIntegration;
 public class VkMessageService: IVkMessageService
 {
     private readonly IVkApiClient _vkApiClient;
+    private readonly IS3Service _serviceS3;
 
-    public VkMessageService(IVkApiClient vkApiClient)
+    public VkMessageService(IVkApiClient vkApiClient, IS3Service serviceS3)
     {
         _vkApiClient = vkApiClient;
+        _serviceS3 = serviceS3;
     }
     
     public Task SendTextAsync(long peerId, string text, CancellationToken cancellationToken = default)
-        => SendCompositeAsync(peerId, new VkSendMessageRequest { Text = text }, cancellationToken);
+        => SendCompositeAsync(peerId, new VkSendMessageRequest { Value = text }, cancellationToken);
 
     public Task SendKeyboardAsync(long peerId, string text, string keyboardPayload, CancellationToken cancellationToken = default)
-        => SendCompositeAsync(peerId, new VkSendMessageRequest { Text = text, KeyboardPayload = keyboardPayload }, cancellationToken);
+        => SendCompositeAsync(peerId, new VkSendMessageRequest { Value = text, KeyboardPayload = keyboardPayload }, cancellationToken);
     
     public async Task SendAnswerMessageEventAsync(string eventId, long userId, long peerId, CancellationToken cancellationToken = default) 
         => await _vkApiClient.AnswerMessageEventAsync(eventId, userId, peerId, cancellationToken);
     
     public async Task SendCompositeAsync(long peerId, VkSendMessageRequest message, CancellationToken cancellationToken = default)
     {
-        var text = message.Text;
-        
-        if (message.HasText && !string.IsNullOrWhiteSpace(text))
-            text = message.Text;
+        var text = string.Empty;
+        if (message.HasValue && !string.IsNullOrWhiteSpace(text))
+            text = $"{message.Name}:\n{message.Value}";
         else if (message.HasKeyboard && !message.HasFiles)
             text = "Клавиатура:";
         else if (!message.HasKeyboard && !message.HasFiles)
             text = "Прошу прощения не могу обработать этот запрос, свяжитесь с колл-центром";
-            
         
         var attachmentString = message.HasFiles
-            ? await UploadFilesAsync(peerId, message.FilePaths, cancellationToken)
+            ? await UploadFilesAsync(peerId, message.FilesUrl, cancellationToken)
             : null;
 
         await _vkApiClient.SendMessageAsync(

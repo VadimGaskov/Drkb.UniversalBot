@@ -1,3 +1,4 @@
+using Drkb.UniversalBot.Application.Interfaces.S3;
 using Drkb.UniversalBot.Application.Interfaces.VkIntegration;
 using MediatR;
 
@@ -7,11 +8,13 @@ public class GetDataCategoryByIdHandler: IRequestHandler<GetDataCategoryByIdQuer
 {
     private readonly IGetDataCategoryByIdQuery _getDataCategoryByIdQuery;
     private readonly IVkKeyboardFactory _vkKeyboardFactory;
+    private readonly IS3Service _s3Service;
 
-    public GetDataCategoryByIdHandler(IGetDataCategoryByIdQuery getDataCategoryByIdQuery, IVkKeyboardFactory vkKeyboardFactory)
+    public GetDataCategoryByIdHandler(IGetDataCategoryByIdQuery getDataCategoryByIdQuery, IVkKeyboardFactory vkKeyboardFactory, IS3Service s3Service)
     {
         _getDataCategoryByIdQuery = getDataCategoryByIdQuery;
         _vkKeyboardFactory = vkKeyboardFactory;
+        _s3Service = s3Service;
     }
 
     public async Task<GetRequestDataDto?> Handle(GetDataCategoryByIdQuery request, CancellationToken cancellationToken)
@@ -22,6 +25,8 @@ public class GetDataCategoryByIdHandler: IRequestHandler<GetDataCategoryByIdQuer
         
         var keyboards = _vkKeyboardFactory.GetVkKeyboardWithBack(response.Categories);
         var messageText = response.Text;
-        return new GetRequestDataDto {Keyboard = keyboards, Text = messageText, Files = response.PathFiles};
+        var filesUrl = await _s3Service.GetAllUrls(response.CategoryId);
+        
+        return new GetRequestDataDto {Keyboard = keyboards, Name = messageText, Value = response.Value, FilesUrl = filesUrl};
     }
 }

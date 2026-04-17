@@ -1,5 +1,6 @@
 using Drkb.UniversalBot.Application.UseCase.Query.CategoryCases.GetCategoriesTree;
 using Drkb.UniversalBot.Domain.Entity;
+using Drkb.UniversalBot.Domain.Entity.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 
 namespace Drkb.UniversalBot.Infrastructure.Data.QueryObjects.Categories;
@@ -17,6 +18,7 @@ public class EfCategoriesTreeQuery: ICategoriesTreeQuery
     {
         var categories = await _context.Categories
             .AsNoTracking()
+            .Where(x=>x.CategoryStatus == CategoryStatus.Active)
             .ToListAsync(cancellationToken);
         
         var lookup = categories.ToDictionary(x => x.Id);

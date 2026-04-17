@@ -1,4 +1,5 @@
 using Drkb.UniversalBot.Application.UseCase.Query.Statistics.GetDashboard;
+using Drkb.UniversalBot.Domain.Entity.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 
 namespace Drkb.UniversalBot.Infrastructure.Data.QueryObjects.Statistics;
@@ -39,7 +40,7 @@ public class EFDashboardQuery: IDashboardQuery
         var popularCategory = await _context.Categories
             .Select(x=> new PopularCategory()
             {
-                Name = x.Title,
+                Name = x.CategoryStatus == CategoryStatus.InActive ? $"{x.Title} (удалена)" : x.Title,
                 Count = x.Statistics.Count
             }).OrderByDescending(x=>x.Count).Take(3).ToListAsync(cancellationToken);
 

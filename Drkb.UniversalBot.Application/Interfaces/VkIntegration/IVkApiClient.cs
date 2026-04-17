@@ -12,7 +12,7 @@ public interface IVkApiClient
         CancellationToken cancellationToken = default);
 
     Task<string> GetDocumentUploadUrlAsync(long peerId, CancellationToken cancellationToken = default);
-    Task<string> UploadDocumentAsync(string uploadUrl, string filePath, CancellationToken cancellationToken = default);
+    Task<string> UploadDocumentAsync(string uploadUrl, string fileUrl, CancellationToken cancellationToken = default);
     Task<VkDocumentInfo> SaveDocumentAsync(string fileToken, string? title, CancellationToken cancellationToken = default);
     Task AnswerMessageEventAsync(string eventId, long userId, long peerId,
         CancellationToken cancellationToken = default);

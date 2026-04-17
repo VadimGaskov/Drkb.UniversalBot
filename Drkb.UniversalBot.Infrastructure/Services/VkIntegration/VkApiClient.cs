@@ -99,16 +99,20 @@ public class VkApiClient: IVkApiClient
     
     public async Task<string> UploadDocumentAsync(
         string uploadUrl,
-        string filePath,
+        string fileUrl,
         CancellationToken cancellationToken = default)
     {
-        await using var fileStream = File.OpenRead(filePath);
+        await using var fileStream = await _httpClient.GetStreamAsync(fileUrl, cancellationToken);
 
         using var form = new MultipartFormDataContent();
         using var fileContent = new StreamContent(fileStream);
         fileContent.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
-
-        form.Add(fileContent, "file", Path.GetFileName(filePath));
+        
+        var fileName = Path.GetFileName(new Uri(fileUrl).AbsolutePath);
+        if (string.IsNullOrWhiteSpace(fileName))
+            fileName = "file";
+        
+        form.Add(fileContent, "file", fileName);
 
         using var response = await _httpClient.PostAsync(uploadUrl, form, cancellationToken);
         response.EnsureSuccessStatusCode();
