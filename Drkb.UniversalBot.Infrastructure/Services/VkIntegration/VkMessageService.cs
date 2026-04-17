@@ -19,17 +19,17 @@ public class VkMessageService: IVkMessageService
         => SendCompositeAsync(peerId, new VkSendMessageRequest { Value = text }, cancellationToken);
 
     public Task SendKeyboardAsync(long peerId, string text, string keyboardPayload, CancellationToken cancellationToken = default)
-        => SendCompositeAsync(peerId, new VkSendMessageRequest { Value = text, KeyboardPayload = keyboardPayload }, cancellationToken);
+        => SendCompositeAsync(peerId, new VkSendMessageRequest { Value = text, KeyboardPayload = keyboardPayload}, cancellationToken);
     
     public async Task SendAnswerMessageEventAsync(string eventId, long userId, long peerId, CancellationToken cancellationToken = default) 
         => await _vkApiClient.AnswerMessageEventAsync(eventId, userId, peerId, cancellationToken);
     
     public async Task SendCompositeAsync(long peerId, VkSendMessageRequest message, CancellationToken cancellationToken = default)
-    {
+    { 
         var text = string.Empty;
-        if (message.HasValue && !string.IsNullOrWhiteSpace(text))
-            text = $"{message.Name}:\n{message.Value}";
-        else if (message.HasKeyboard && !message.HasFiles)
+        if (message.HasValue || message.HasName)
+            text = $"{message.Name}\n\n{message.Value}";
+        else if (message.HasKeyboard && !message.HasFiles && message.SendText)
             text = "Клавиатура:";
         else if (!message.HasKeyboard && !message.HasFiles)
             text = "Прошу прощения не могу обработать этот запрос, свяжитесь с колл-центром";

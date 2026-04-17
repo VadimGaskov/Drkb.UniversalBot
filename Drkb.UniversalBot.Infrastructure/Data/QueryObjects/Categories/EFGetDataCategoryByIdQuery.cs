@@ -21,7 +21,7 @@ public class EFGetDataCategoryByIdQuery: IGetDataCategoryByIdQuery
             {
                 Categories = x.ChildrenCategories.Where(cc => cc.CategoryStatus == CategoryStatus.Active).ToList(),
                 CategoryId = x.Id,
-                Text = x.Title,
+                Name = x.Title,
                 Value = x.Value
             }).FirstOrDefaultAsync(cancellationToken);
     }

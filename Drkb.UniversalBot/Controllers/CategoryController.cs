@@ -1,6 +1,7 @@
 using Drkb.UniversalBot.Application.UseCase.Command.CategoryCases.CreateCategory;
 using Drkb.UniversalBot.Application.UseCase.Command.CategoryCases.DeleteCategory;
 using Drkb.UniversalBot.Application.UseCase.Command.CategoryCases.UpdateCategory;
+using Drkb.UniversalBot.Application.UseCase.Command.CategoryCases.UpdateSeq;
 using Drkb.UniversalBot.Application.UseCase.Query.CategoryCases.GetCategories;
 using Drkb.UniversalBot.Application.UseCase.Query.CategoryCases.GetCategoriesTree;
 using Drkb.UniversalBot.Application.UseCase.Query.CategoryCases.GetCategory;
@@ -84,6 +85,19 @@ public class CategoryController: ControllerBase
             return BadRequest("Id is empty");
         
         var result = await _mediator.Send(new DeleteCategoryCommand(id), cancellationToken);
+        if (!result.IsSuccess)
+            return StatusCode(result.StatusCode, result.ErrorMessage);
+
+        return Ok();
+    }
+
+    [HttpPost("reorder")]
+    public async Task<IActionResult> UpdateSeq(ReorderCategoryCommand command, CancellationToken cancellationToken)
+    {
+        if (command.ReorderCategories.Count == 0)
+            return BadRequest("No reorder categories");
+        
+        var result = await _mediator.Send(command, cancellationToken);
         if (!result.IsSuccess)
             return StatusCode(result.StatusCode, result.ErrorMessage);
 

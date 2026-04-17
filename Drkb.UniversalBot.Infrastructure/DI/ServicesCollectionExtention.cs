@@ -2,6 +2,7 @@ using System.Text.Json.Serialization;
 using Drkb.CacheService.Redis;
 using Drkb.UniversalBot.Application.Interfaces;
 using Drkb.UniversalBot.Application.Interfaces.Authorization;
+using Drkb.UniversalBot.Application.Interfaces.MaxIntegration.Options;
 using Drkb.UniversalBot.Application.Interfaces.S3;
 using Drkb.UniversalBot.Application.Interfaces.VkIntegration;
 using Drkb.UniversalBot.Application.Interfaces.VkIntegration.Options;
@@ -31,6 +32,8 @@ public static class ServicesCollectionExtention
         {
             client.BaseAddress = new Uri("https://api.vk.com/method/");
         });
+        
+        services.Configure<MaxOption>(configuration.GetSection("Max"));
         
         services.Configure<FileSaverOptions>(configuration.GetSection("FileSaver"));
         services.AddHttpClient<IS3Service, S3Service>();

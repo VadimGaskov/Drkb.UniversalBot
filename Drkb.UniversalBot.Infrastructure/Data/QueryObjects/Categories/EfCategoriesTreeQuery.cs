@@ -19,6 +19,7 @@ public class EfCategoriesTreeQuery: ICategoriesTreeQuery
         var categories = await _context.Categories
             .AsNoTracking()
             .Where(x=>x.CategoryStatus == CategoryStatus.Active)
+            .OrderBy(x=>x.Seq)
             .ToListAsync(cancellationToken);
         
         var lookup = categories.ToDictionary(x => x.Id);

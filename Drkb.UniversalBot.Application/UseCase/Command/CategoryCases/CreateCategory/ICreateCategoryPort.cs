@@ -7,4 +7,5 @@ public interface ICreateCategoryPort: IPortMarker
 {
     Task AddCategoryAsync(Category category, CancellationToken cancellationToken);
     Task<Category?> GetCategoryByIdAsync(Guid? categoryId, CancellationToken ct);
+    Task<int> GetLastSeq(CancellationToken ct);
 }

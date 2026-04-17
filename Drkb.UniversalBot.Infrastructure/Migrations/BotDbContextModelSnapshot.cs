@@ -37,6 +37,9 @@ namespace Drkb.UniversalBot.Infrastructure.Migrations
                     b.Property<Guid?>("ParentCategoryId")
                         .HasColumnType("uuid");
 
+                    b.Property<int>("Seq")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("text");
@@ -47,9 +50,6 @@ namespace Drkb.UniversalBot.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ParentCategoryId");
-
-                    b.HasIndex("Title", "CategoryStatus")
-                        .IsUnique();
 
                     b.ToTable("Categories");
                 });

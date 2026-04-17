@@ -21,7 +21,7 @@ public class EfMainKeyboardQuery: IMainKeyboardQuery
         CancellationToken cancellationToken = default)
     {
         var categories =
-            await _context.Categories.Where(x => x.ParentCategoryId == null && x.CategoryStatus == CategoryStatus.Active).ToListAsync(cancellationToken);
+            await _context.Categories.Where(x => x.ParentCategoryId == null && x.CategoryStatus == CategoryStatus.Active).OrderBy(x=>x.Seq).ToListAsync(cancellationToken);
 
         return categories;
     }

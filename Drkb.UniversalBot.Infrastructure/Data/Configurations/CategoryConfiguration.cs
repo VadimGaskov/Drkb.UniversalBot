@@ -9,7 +9,6 @@ public class CategoryConfiguration: IEntityTypeConfiguration<Category>
 {
     public void Configure(EntityTypeBuilder<Category> builder)
     {
-        builder.HasIndex(x=> new {x.Title, x.CategoryStatus}).IsUnique();
         
         builder.HasOne(x => x.ParentCategory)
             .WithMany(x => x.ChildrenCategories)

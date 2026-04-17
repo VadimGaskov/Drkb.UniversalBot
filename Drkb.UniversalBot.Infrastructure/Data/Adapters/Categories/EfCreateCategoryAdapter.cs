@@ -22,4 +22,9 @@ public class EfCreateCategoryAdapter: ICreateCategoryPort
     {
         return await _context.Categories.FirstOrDefaultAsync(x=>x.Id == categoryId, ct);
     }
+
+    public async Task<int> GetLastSeq(CancellationToken ct)
+    {
+        return await _context.Categories.MaxAsync(x=>x.Seq, ct);
+    }
 }

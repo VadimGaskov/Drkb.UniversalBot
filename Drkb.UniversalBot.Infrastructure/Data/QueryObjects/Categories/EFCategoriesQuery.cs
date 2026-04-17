@@ -18,10 +18,12 @@ public class EFCategoriesQuery: ICategoriesQuery
         return await _context.Categories
             .AsNoTracking()
             .Where(x=>x.CategoryStatus == CategoryStatus.Active)
+            .OrderBy(x=>x.Seq)
             .Select(x => new GetCategoriesDto
             {
                 Id = x.Id,
                 Name = x.Title
-            }).ToListAsync(cancellationToken);
+            })
+            .ToListAsync(cancellationToken);
     }
 }

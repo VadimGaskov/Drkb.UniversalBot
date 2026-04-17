@@ -27,12 +27,13 @@ public class CreateCategoryHandler: IRequestHandler<CreateCategoryCommand, Resul
     {
         
         var parentCategory = await _categoryPort.GetCategoryByIdAsync(request.ParentCategoryId, cancellationToken);
-
+        var seq = await _categoryPort.GetLastSeq(cancellationToken);
         var category = new Category()
         {
             Title = request.NameCategory,
             ParentCategory = parentCategory,
             Value = request.Value,
+            Seq = seq + 1,
         };
         await _categoryPort.AddCategoryAsync(category, cancellationToken);
         
