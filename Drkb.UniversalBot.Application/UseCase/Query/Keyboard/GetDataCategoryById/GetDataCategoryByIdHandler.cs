@@ -23,7 +23,7 @@ public class GetDataCategoryByIdHandler: IRequestHandler<GetDataCategoryByIdQuer
         if (response is null)
             return null;
         
-        var keyboards = _vkKeyboardFactory.GetVkKeyboardWithBack(response.Categories);
+        var keyboards = _vkKeyboardFactory.GetVkKeyboard(response.Categories);
         var categoryName = response.Name;
         var categoryValue = response.Value;
         var filesUrl = await _s3Service.GetAllUrls(response.CategoryId);

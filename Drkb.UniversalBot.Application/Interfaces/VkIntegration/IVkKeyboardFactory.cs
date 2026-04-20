@@ -4,6 +4,6 @@ namespace Drkb.UniversalBot.Application.Interfaces.VkIntegration;
 
 public interface IVkKeyboardFactory
 {
-    string GetVkKeyboardWithBack(List<Category> categories);
+    string GetVkMainKeyboard(List<Category> categories);
     string GetVkKeyboard(List<Category> categories);
 }

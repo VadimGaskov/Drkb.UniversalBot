@@ -6,7 +6,7 @@ namespace Drkb.UniversalBot.Infrastructure.Services.VkIntegration;
 
 public class VkKeyboardFactory: IVkKeyboardFactory
 {
-    private string Generation(List<Category> categories, bool withCoBack, bool inline)
+    private string Generation(List<Category> categories, bool inline)
     {
         var buttons = categories.Select(x => new object[]
         {
@@ -20,22 +20,6 @@ public class VkKeyboardFactory: IVkKeyboardFactory
                 }
             }
         }).ToList();
-
-        if (withCoBack)
-        {
-            buttons.Add(new object[]
-            {
-                new
-                {
-                    action = new
-                    {
-                        type = "callback",
-                        label = "На главное меню",
-                        payload = JsonSerializer.Serialize(new { command = "back" }),
-                    }
-                }
-            });
-        }
         
         var keyboard = new
         {
@@ -47,13 +31,13 @@ public class VkKeyboardFactory: IVkKeyboardFactory
         return JsonSerializer.Serialize(keyboard);
     }
 
-    public string GetVkKeyboardWithBack(List<Category> categories)
+    public string GetVkMainKeyboard(List<Category> categories)
     {
-        return Generation(categories, true, true);
+        return Generation(categories, false);
     }
-
+    
     public string GetVkKeyboard(List<Category> categories)
     {
-        return Generation(categories, false, false);
+        return Generation(categories, true);
     }
 }

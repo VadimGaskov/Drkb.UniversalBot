@@ -17,6 +17,6 @@ public class GetMainKeyboardHandler: IRequestHandler<GetMainKeyboardQuery, strin
     public async Task<string> Handle(GetMainKeyboardQuery request, CancellationToken cancellationToken)
     {
         var result = await _mainKeyboardQuery.ExecuteAsync(request, cancellationToken);
-        return _vkKeyboardFactory.GetVkKeyboard(result);
+        return _vkKeyboardFactory.GetVkMainKeyboard(result);
     }
 }

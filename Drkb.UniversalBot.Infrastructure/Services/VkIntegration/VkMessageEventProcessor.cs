@@ -54,14 +54,6 @@ public class VkMessageEventProcessor: IVkMessageEventProcessor
             _logger.LogError("Failed to process message event", e);
         }
         
-        var senderKeyboard = await _mediator.Send(new GetMainKeyboardQuery(), cancellationToken);
-        
-        if (messageEvent.Payload.Command == "back")
-        {
-            await _vkMessageService.SendKeyboardAsync(messageEvent.PeerId, "Выберите вариант из клавиатуры", senderKeyboard, cancellationToken);
-            return;
-        }
-        
         var data = await _mediator.Send(new GetDataCategoryByIdQuery(Guid.Parse(messageEvent.Payload.Id)), cancellationToken);
         if (data is null)
         {
@@ -79,6 +71,8 @@ public class VkMessageEventProcessor: IVkMessageEventProcessor
         };
         
         await _vkMessageService.SendCompositeAsync(messageEvent.PeerId, messageRequest, cancellationToken);
+        
+        var senderKeyboard = await _mediator.Send(new GetMainKeyboardQuery(), cancellationToken);
         await _vkMessageService.SendKeyboardAsync(messageEvent.PeerId, "Главное меню:", senderKeyboard, cancellationToken);
         
         await _mediator.Publish(new CreateStatisticsEvent
