@@ -19,6 +19,7 @@ public record GetDashboardDto
     public int CountMessages { get; init; }
     public int CountCategories { get; init; }
     public int ActiveUsersToday { get; init; }
+    public int CountNewUsers { get; set; }
     public List<ActiveWeek> ActiveWeeks { get; init; }
     public List<PopularCategory> PopularCategories { get; set; }
 }

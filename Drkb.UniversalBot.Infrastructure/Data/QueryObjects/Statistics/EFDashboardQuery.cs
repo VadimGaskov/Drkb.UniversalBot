@@ -22,6 +22,8 @@ public class EFDashboardQuery: IDashboardQuery
             .Where(x=>x.Statistics.Any(s=>s.Date.Date == DateTime.UtcNow.Date))
             .CountAsync(cancellationToken);
 
+        var countNewUsersForWeek = await _context.SenderUsers.Where(x=>!x.Statistics.Any(s => s.Date < DateTime.UtcNow.AddDays(-7))).CountAsync(cancellationToken);
+
         var activeWeek = await _context.Statistics
             .Where(x => x.Date.Date <= DateTime.UtcNow.Date && x.Date.Date >= DateTime.UtcNow.Date.AddDays(-7))
             .Select(x => new
@@ -52,6 +54,7 @@ public class EFDashboardQuery: IDashboardQuery
             CountCategories = countCategories,
             PopularCategories = popularCategory,
             ActiveUsersToday = activeUsersToday,
+            CountNewUsers = countNewUsersForWeek,
         };
     }
 }
