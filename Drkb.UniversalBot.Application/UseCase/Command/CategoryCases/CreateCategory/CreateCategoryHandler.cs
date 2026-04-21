@@ -5,6 +5,7 @@ using Drkb.UniversalBot.Application.UseCase.Command.MessagesStructure.CreateMess
 using Drkb.UniversalBot.Contracts.Category;
 using Drkb.UniversalBot.Domain.Entity;
 using Drkb.UniversalBot.Domain.Entity.ValueObjects;
+using MassTransit;
 using MediatR;
 using MessageBroker.Abstractions.Interfaces.Publisher;
 
@@ -14,13 +15,16 @@ public class CreateCategoryHandler: IRequestHandler<CreateCategoryCommand, Resul
 {
     private readonly ICreateCategoryPort _categoryPort;
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IPublishEndpoint _publishEndpoint;
+    
     private readonly IMessageBrokerPublisher _messageBrokerPublisher;
     
-    public CreateCategoryHandler(ICreateCategoryPort categoryPort, IUnitOfWork unitOfWork, IMessageBrokerPublisher messageBrokerPublisher)
+    public CreateCategoryHandler(ICreateCategoryPort categoryPort, IUnitOfWork unitOfWork, IMessageBrokerPublisher messageBrokerPublisher, IPublishEndpoint publishEndpoint)
     {
         _categoryPort = categoryPort;
         _unitOfWork = unitOfWork;
         _messageBrokerPublisher = messageBrokerPublisher;
+        _publishEndpoint = publishEndpoint;
     }
 
     public async Task<Result> Handle(CreateCategoryCommand request, CancellationToken cancellationToken)
@@ -37,11 +41,11 @@ public class CreateCategoryHandler: IRequestHandler<CreateCategoryCommand, Resul
         };
         await _categoryPort.AddCategoryAsync(category, cancellationToken);
         
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
-        
         if (request.FileIds.Count != 0)
-            await _messageBrokerPublisher.PublishAsync(new CategoryCreatedEvent(category.Id, request.UploadContextId,
+            await _publishEndpoint.Publish(new CategoryCreatedEvent(category.Id, request.UploadContextId,
                 request.FileIds), cancellationToken);
+        
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
         
         return Result.Success();
     }

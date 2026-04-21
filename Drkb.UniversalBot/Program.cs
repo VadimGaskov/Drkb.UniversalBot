@@ -20,7 +20,6 @@ builder.Services.AddDataProviderServices();
 builder.Services.AddServices(builder.Configuration);
 builder.Services.AddQueryObjects();
 builder.Services.AddSwagger();
-builder.Services.AddEventHandlers();
 
 builder.Services.AddSerilogLogger();
 Log.Logger = SerilogConfiguration.GetSerilogConfiguration(builder.Configuration);
