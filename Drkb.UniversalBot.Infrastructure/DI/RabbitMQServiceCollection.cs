@@ -1,7 +1,6 @@
-﻿using Drkb.UniversalBot.Application.Events;
-using Drkb.UniversalBot.Contracts.Category;
-using Drkb.UniversalBot.Integration.RabbitMq;
-using MessageBroker.RabbitMQ;
+﻿using Drkb.MessageBroker.Masstransit;
+using Drkb.UniversalBot.Infrastructure.Data;
+using Drkb.UniversalBot.Infrastructure.Services.MessageBrocker.MessageEvents.Vk;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -11,31 +10,16 @@ public static class RabbitMQServiceCollection
 {
     public static IServiceCollection AddRabbitMQCollection(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddRabbitMq(configuration.GetSection("RabbitMQ"), configure =>
+        services.AddDrkbMassTransit<BotDbContext>(configuration.GetSection("RabbitMQ"), options =>
         {
-            configure.ConfigureConsumer(x =>
+            options.DomainName = "bot";
+
+            options.ConfigureRegistration = x =>
             {
-                x.Bind<VkMessageEvent>(
-                    exchange: "messages-events",
-                    queueName: "bot.messages-events.created",
-                    routingKey: "messages-events.created");
-            });
-            
-            configure.ConfigureProducer(x =>
-            {
-                x.Map<VkMessageEvent>(
-                    exchange: "messages-events",
-                    routingKey: "messages-events.created");
-                
-                x.Map<CategoryCreatedEvent>(
-                    exchange: CategoryIntegrationMetadata.Created.Exchange,
-                    routingKey: CategoryIntegrationMetadata.Created.RoutingKey);
-                
-                x.Map<CategoryUpdatedEvent>(
-                    exchange: CategoryIntegrationMetadata.Updated.Exchange,
-                    routingKey: CategoryIntegrationMetadata.Updated.RoutingKey);
-            });
+                x.AddConsumer<CreateMessageConsumer>();
+            };
         });
+        
         return services;
     }
 }
