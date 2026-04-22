@@ -25,6 +25,11 @@ public class EfCreateCategoryAdapter: ICreateCategoryPort
 
     public async Task<int> GetLastSeq(CancellationToken ct)
     {
-        return await _context.Categories.MaxAsync(x=>x.Seq, ct);
+        var lastCategory = await _context.Categories
+            .OrderByDescending(c => c.Seq)
+            .FirstOrDefaultAsync(ct);
+
+        var lastSeq = lastCategory?.Seq ?? 0;
+        return lastSeq;
     }
 }
