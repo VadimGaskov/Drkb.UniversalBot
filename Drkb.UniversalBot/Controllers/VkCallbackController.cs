@@ -53,7 +53,7 @@ public class VkCallbackController : ControllerBase
             return Content(_options.ConfirmationCode);
         
 
-        var result = await _mediator.Send(new VkResponseMessageCommand(new VkMessageEvent()
+        var result = await _mediator.Send(new VkResponseMessageCommand(new VkMessageCreatedEvent()
         {
             GroupId = _options.GroupId,
             Object = request.Object,

@@ -17,13 +17,11 @@ public class CreateCategoryHandler: IRequestHandler<CreateCategoryCommand, Resul
     private readonly IUnitOfWork _unitOfWork;
     private readonly IPublishEndpoint _publishEndpoint;
     
-    private readonly IMessageBrokerPublisher _messageBrokerPublisher;
     
-    public CreateCategoryHandler(ICreateCategoryPort categoryPort, IUnitOfWork unitOfWork, IMessageBrokerPublisher messageBrokerPublisher, IPublishEndpoint publishEndpoint)
+    public CreateCategoryHandler(ICreateCategoryPort categoryPort, IUnitOfWork unitOfWork, IPublishEndpoint publishEndpoint)
     {
         _categoryPort = categoryPort;
         _unitOfWork = unitOfWork;
-        _messageBrokerPublisher = messageBrokerPublisher;
         _publishEndpoint = publishEndpoint;
     }
 

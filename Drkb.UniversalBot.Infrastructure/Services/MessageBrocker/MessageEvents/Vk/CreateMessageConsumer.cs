@@ -7,7 +7,7 @@ using MassTransit;
 
 namespace Drkb.UniversalBot.Infrastructure.Services.MessageBrocker.MessageEvents.Vk;
 
-public class CreateMessageConsumer: IConsumer<VkMessageEvent>
+public class CreateMessageConsumer: IConsumer<VkMessageCreatedEvent>
 {
     private readonly ILoggerService _logger;
     private readonly IVkMessageEventProcessor _vkMessageEventProcessor;
@@ -20,7 +20,7 @@ public class CreateMessageConsumer: IConsumer<VkMessageEvent>
         _vkMessageNewProcessor = vkMessageNewProcessor;
     }
 
-    public async Task Consume(ConsumeContext<VkMessageEvent> context)
+    public async Task Consume(ConsumeContext<VkMessageCreatedEvent> context)
     {
         var @event = context.Message;
         switch (@event.Type)

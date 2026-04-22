@@ -1,10 +1,11 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using MessageBroker.Abstractions;
+using MassTransit;
 
 namespace Drkb.UniversalBot.Application.Events;
 
-public record VkMessageEvent: BaseIntegrationEvent
+[EntityName("message.created.v1")]
+public record VkMessageCreatedEvent
 {
     [JsonPropertyName("type")]
     public string Type { get; set; } = string.Empty;

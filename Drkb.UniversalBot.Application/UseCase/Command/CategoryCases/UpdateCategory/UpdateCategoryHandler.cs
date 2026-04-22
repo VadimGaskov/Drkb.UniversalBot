@@ -14,12 +14,10 @@ public class UpdateCategoryHandler: IRequestHandler<UpdateCategoryCommand, Resul
 
     private readonly IPublishEndpoint _publishEndpoint;
     
-    private readonly IMessageBrokerPublisher _messageBrokerPublisher;
-    public UpdateCategoryHandler(IUpdateCategoryPort updateCategoryPort, IUnitOfWork unitOfWork, IMessageBrokerPublisher messageBrokerPublisher, IPublishEndpoint publishEndpoint)
+    public UpdateCategoryHandler(IUpdateCategoryPort updateCategoryPort, IUnitOfWork unitOfWork, IPublishEndpoint publishEndpoint)
     {
         _updateCategoryPort = updateCategoryPort;
         _unitOfWork = unitOfWork;
-        _messageBrokerPublisher = messageBrokerPublisher;
         _publishEndpoint = publishEndpoint;
     }
 
