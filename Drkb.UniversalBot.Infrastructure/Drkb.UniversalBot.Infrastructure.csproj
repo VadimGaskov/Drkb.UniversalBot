@@ -31,7 +31,6 @@
       <ProjectReference Include="..\Drkb.UniversalBot.Application\Drkb.UniversalBot.Application.csproj" />
       <ProjectReference Include="..\Drkb.UniversalBot.Contracts\Drkb.UniversalBot.Contracts.csproj" />
       <ProjectReference Include="..\Drkb.UniversalBot.Domain\Drkb.UniversalBot.Domain.csproj" />
-      <ProjectReference Include="..\Drkb.UniversalBot.Integration\Drkb.UniversalBot.Integration.csproj" />
     </ItemGroup>
 
 </Project>
