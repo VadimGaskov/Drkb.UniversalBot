@@ -6,27 +6,26 @@ using Drkb.UniversalBot.Application.Interfaces.VkIntegration.CallbackDtos;
 using Drkb.UniversalBot.Application.Interfaces.VkIntegration.Options;
 using Drkb.UniversalBot.Application.UseCase.Command.VkApi.ResponseMessage;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 
 namespace Drkb.UniversalBot.Controllers;
 
 [ApiController]
+[Authorize]
 [Route("api/vk/callback")]
 public class VkCallbackController : ControllerBase
 {
     private readonly VkOptions _options;
-    private readonly IVkMessageService _vkMessageService;
     private readonly ILoggerService _logger;
     private readonly IMediator _mediator;
 
     public VkCallbackController(
         IOptions<VkOptions> options,
-        IVkMessageService vkMessageService,
         ILoggerService logger, IMediator mediator)
     {
         _options = options.Value;
-        _vkMessageService = vkMessageService;
         _logger = logger;
         _mediator = mediator;
     }
@@ -67,7 +66,5 @@ public class VkCallbackController : ControllerBase
             return Content("ok");
         }
         return Content("ok");
-
-        
     }
 }

@@ -1,6 +1,12 @@
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+
 namespace Drkb.UniversalBot.Controllers;
 
-public class MaxCallbackController
+[ApiController]
+[Authorize]
+[Route("api/max/callback")]
+public class MaxCallbackController: ControllerBase
 {
     
 }

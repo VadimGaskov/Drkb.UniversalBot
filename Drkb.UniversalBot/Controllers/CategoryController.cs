@@ -6,11 +6,13 @@ using Drkb.UniversalBot.Application.UseCase.Query.CategoryCases.GetCategories;
 using Drkb.UniversalBot.Application.UseCase.Query.CategoryCases.GetCategoriesTree;
 using Drkb.UniversalBot.Application.UseCase.Query.CategoryCases.GetCategory;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Drkb.UniversalBot.Controllers;
 
 [ApiController]
+[Authorize]
 [Route("api/categories")]
 public class CategoryController: ControllerBase
 {

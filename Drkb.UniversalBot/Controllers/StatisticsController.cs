@@ -1,10 +1,12 @@
 using Drkb.UniversalBot.Application.UseCase.Query.Statistics.GetDashboard;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Drkb.UniversalBot.Controllers;
 
 [ApiController]
+[Authorize]
 [Route("api/statistics")]
 public class StatisticsController: ControllerBase
 {
