@@ -1,5 +1,5 @@
 using System.Diagnostics;
-using Drkb.UniversalBot.Application.Interfaces.S3;
+using Drkb.UniversalBot.Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Drkb.UniversalBot.Models;
 

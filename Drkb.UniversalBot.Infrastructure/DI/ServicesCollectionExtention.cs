@@ -2,14 +2,15 @@ using System.Text.Json.Serialization;
 using Drkb.CacheService.Redis;
 using Drkb.UniversalBot.Application.Interfaces;
 using Drkb.UniversalBot.Application.Interfaces.Authorization;
-using Drkb.UniversalBot.Application.Interfaces.MaxIntegration.Options;
-using Drkb.UniversalBot.Application.Interfaces.S3;
+using Drkb.UniversalBot.Application.Interfaces.Messagers;
 using Drkb.UniversalBot.Application.Interfaces.VkIntegration;
-using Drkb.UniversalBot.Application.Interfaces.VkIntegration.Options;
+using Drkb.UniversalBot.Domain.Entity.ValueObjects;
+using Drkb.UniversalBot.Infrastructure.Messengers;
+using Drkb.UniversalBot.Infrastructure.Messengers.Max;
+using Drkb.UniversalBot.Infrastructure.Messengers.Vk;
 using Drkb.UniversalBot.Infrastructure.Option;
 using Drkb.UniversalBot.Infrastructure.Services;
 using Drkb.UniversalBot.Infrastructure.Services.Authorization;
-using Drkb.UniversalBot.Infrastructure.Services.VkIntegration;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -38,13 +39,15 @@ public static class ServicesCollectionExtention
         services.Configure<FileSaverOptions>(configuration.GetSection("FileSaver"));
         services.AddHttpClient<IS3Service, S3Service>();
 
-        services.AddScoped<IVkMessageService, VkMessageService>();
-        services.AddTransient<IVkKeyboardFactory, VkKeyboardFactory>();
+        services.AddKeyedScoped<IBotService, VkMessageService>(Messenger.VK);
+        services.AddKeyedScoped<IBotService, MaxMessageService>(Messenger.MAX);
+        
+        services.AddTransient<IKeyboardFactory, KeyboardFactory>();
 
         services.RegisterRedis(configuration.GetSection("Redis"));
-
-        services.AddScoped<IVkMessageEventProcessor, VkMessageEventProcessor>();
-        services.AddScoped<IVkMessageNewProcessor, VkMessageNewProcessor>();
+        
+        services.AddKeyedScoped<IMessageProcessor, TextMessageProcessor>("text");
+        services.AddKeyedScoped<IMessageProcessor, CallbackMessageProcessor>("callback");
         
         services.AddControllers()
             .AddJsonOptions(options =>
@@ -53,6 +56,6 @@ public static class ServicesCollectionExtention
                     .Add(new JsonStringEnumConverter());
             });
         
-        return services;
+        return services; 
     }
 }

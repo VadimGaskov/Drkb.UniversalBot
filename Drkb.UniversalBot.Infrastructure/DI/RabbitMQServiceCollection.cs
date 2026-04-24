@@ -1,6 +1,6 @@
 ﻿using Drkb.MessageBroker.Masstransit;
 using Drkb.UniversalBot.Infrastructure.Data;
-using Drkb.UniversalBot.Infrastructure.Services.MessageBrocker.MessageEvents.Vk;
+using Drkb.UniversalBot.Infrastructure.Services.MessageBroker.MessageEvents.Vk;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 

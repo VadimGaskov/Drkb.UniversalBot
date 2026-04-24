@@ -5,4 +5,4 @@ using MediatR;
 
 namespace Drkb.UniversalBot.Application.UseCase.Command.VkApi.ResponseMessage;
 
-public record VkResponseMessageCommand(VkMessageCreatedEvent VkMessageCreated) : IRequest<Result>;
+public record VkCallbackCommand(VkMessageCreatedEvent VkMessageCreated) : IRequest<Result>;

@@ -1,6 +1,6 @@
 using Drkb.ResultObjects;
 using Drkb.UniversalBot.Application.Interfaces;
-using Drkb.UniversalBot.Application.Interfaces.DataProvider;
+using Drkb.UniversalBot.Application.Interfaces.Ports;
 using Drkb.UniversalBot.Application.UseCase.Command.MessagesStructure.CreateMessageStructure;
 using Drkb.UniversalBot.Contracts.Category;
 using Drkb.UniversalBot.Domain.Entity;

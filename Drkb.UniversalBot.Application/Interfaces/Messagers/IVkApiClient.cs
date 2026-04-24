@@ -1,6 +1,6 @@
 using Drkb.UniversalBot.Application.Interfaces.VkIntegration.ResponesDtos;
 
-namespace Drkb.UniversalBot.Application.Interfaces.VkIntegration;
+namespace Drkb.UniversalBot.Application.Interfaces.Messagers;
 
 public interface IVkApiClient
 {

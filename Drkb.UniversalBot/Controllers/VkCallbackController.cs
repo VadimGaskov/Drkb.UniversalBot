@@ -3,8 +3,8 @@ using Drkb.UniversalBot.Application.Events;
 using Drkb.UniversalBot.Application.Interfaces;
 using Drkb.UniversalBot.Application.Interfaces.VkIntegration;
 using Drkb.UniversalBot.Application.Interfaces.VkIntegration.CallbackDtos;
-using Drkb.UniversalBot.Application.Interfaces.VkIntegration.Options;
 using Drkb.UniversalBot.Application.UseCase.Command.VkApi.ResponseMessage;
+using Drkb.UniversalBot.Infrastructure.Option;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -13,7 +13,6 @@ using Microsoft.Extensions.Options;
 namespace Drkb.UniversalBot.Controllers;
 
 [ApiController]
-[Authorize]
 [Route("api/vk/callback")]
 public class VkCallbackController : ControllerBase
 {
@@ -52,7 +51,7 @@ public class VkCallbackController : ControllerBase
             return Content(_options.ConfirmationCode);
         
 
-        var result = await _mediator.Send(new VkResponseMessageCommand(new VkMessageCreatedEvent()
+        var result = await _mediator.Send(new VkCallbackCommand(new VkMessageCreatedEvent()
         {
             GroupId = _options.GroupId,
             Object = request.Object,

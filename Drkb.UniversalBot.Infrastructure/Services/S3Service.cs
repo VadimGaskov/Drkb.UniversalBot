@@ -1,6 +1,6 @@
 using System.Net.Http.Json;
 using Drkb.UniversalBot.Application.Dtos;
-using Drkb.UniversalBot.Application.Interfaces.S3;
+using Drkb.UniversalBot.Application.Interfaces;
 using Drkb.UniversalBot.Infrastructure.Option;
 using Microsoft.Extensions.Options;
 

@@ -1,4 +1,4 @@
-using Drkb.UniversalBot.Application.Interfaces.DataProvider;
+using Drkb.UniversalBot.Application.Interfaces.Ports;
 using MediatR;
 
 namespace Drkb.UniversalBot.Application.UseCase.Command.Statistics.CreateStatistics;

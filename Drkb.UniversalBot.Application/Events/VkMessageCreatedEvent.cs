@@ -4,7 +4,7 @@ using MassTransit;
 
 namespace Drkb.UniversalBot.Application.Events;
 
-[EntityName("message.created.v1")]
+[EntityName("vk.message.created.v1")]
 public record VkMessageCreatedEvent
 {
     [JsonPropertyName("type")]

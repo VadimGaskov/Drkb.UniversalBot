@@ -1,4 +1,4 @@
-﻿using Drkb.UniversalBot.Application.Interfaces.DataProvider;
+﻿using Drkb.UniversalBot.Application.Interfaces.Ports;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Drkb.UniversalBot.Infrastructure.DI;
