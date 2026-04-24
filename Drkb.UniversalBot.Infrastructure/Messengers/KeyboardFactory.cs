@@ -1,10 +1,11 @@
 using System.Text.Json;
+using Drkb.UniversalBot.Application.Interfaces.Messagers;
 using Drkb.UniversalBot.Application.Interfaces.VkIntegration;
 using Drkb.UniversalBot.Domain.Entity;
 
-namespace Drkb.UniversalBot.Infrastructure.Services.VkIntegration;
+namespace Drkb.UniversalBot.Infrastructure.Messengers;
 
-public class VkKeyboardFactory: IVkKeyboardFactory
+public class KeyboardFactory: IKeyboardFactory
 {
     private string Generation(List<Category> categories, bool inline)
     {
@@ -31,12 +32,12 @@ public class VkKeyboardFactory: IVkKeyboardFactory
         return JsonSerializer.Serialize(keyboard);
     }
 
-    public string GetVkMainKeyboard(List<Category> categories)
+    public string GetMainKeyboard(List<Category> categories)
     {
         return Generation(categories, false);
     }
     
-    public string GetVkKeyboard(List<Category> categories)
+    public string GetKeyboard(List<Category> categories)
     {
         return Generation(categories, true);
     }

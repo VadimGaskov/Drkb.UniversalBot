@@ -1,4 +1,4 @@
-using Drkb.UniversalBot.Application.Interfaces.DataProvider;
+using Drkb.UniversalBot.Application.Interfaces.Ports;
 using Drkb.UniversalBot.Domain.Entity;
 using Drkb.UniversalBot.Domain.Entity.ValueObjects;
 

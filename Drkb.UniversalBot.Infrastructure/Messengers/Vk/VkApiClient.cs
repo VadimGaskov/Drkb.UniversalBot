@@ -1,15 +1,15 @@
 ﻿using System.Net.Http.Json;
 using System.Text.Json;
+using Drkb.UniversalBot.Application.Interfaces.Messagers;
 using Drkb.UniversalBot.Application.Interfaces.VkIntegration;
-using Drkb.UniversalBot.Application.Interfaces.VkIntegration.Options;
 using Drkb.UniversalBot.Application.Interfaces.VkIntegration.ResponesDtos;
+using Drkb.UniversalBot.Infrastructure.Option;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Microsoft.Net.Http.Headers;
 using MediaTypeHeaderValue = System.Net.Http.Headers.MediaTypeHeaderValue;
 
-namespace Drkb.UniversalBot.Infrastructure.Services.VkIntegration;
+namespace Drkb.UniversalBot.Infrastructure.Messengers.Vk;
 
 public class VkApiClient: IVkApiClient
 {

@@ -1,4 +1,4 @@
-﻿namespace Drkb.UniversalBot.Application.Interfaces.DataProvider;
+﻿namespace Drkb.UniversalBot.Application.Interfaces.Ports;
 
 public interface IGetByIdPort<TResponse>: IPortMarker
 {

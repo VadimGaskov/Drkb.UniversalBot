@@ -20,7 +20,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Interfaces\Messanger\" />
+      <Folder Include="Dtos\Messenger\Max\" />
+      <Folder Include="Dtos\Messenger\Vk\" />
     </ItemGroup>
 
 </Project>
