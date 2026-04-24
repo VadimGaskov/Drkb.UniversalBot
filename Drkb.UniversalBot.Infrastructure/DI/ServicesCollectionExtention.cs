@@ -48,6 +48,7 @@ public static class ServicesCollectionExtention
         
         services.AddKeyedScoped<IMessageProcessor, TextMessageProcessor>("text");
         services.AddKeyedScoped<IMessageProcessor, CallbackMessageProcessor>("callback");
+        services.AddScoped<IMessagePostProcessor, MessagePostProcessor>();
         
         services.AddControllers()
             .AddJsonOptions(options =>
