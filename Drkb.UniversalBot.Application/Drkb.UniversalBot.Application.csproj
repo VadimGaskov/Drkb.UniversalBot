@@ -9,6 +9,7 @@
 
     <ItemGroup>
       <PackageReference Include="Drkb.CacheService.Abstractions" Version="1.0.3" />
+      <PackageReference Include="Drkb.Logger.Abstractions" Version="1.0.0" />
       <PackageReference Include="Drkb.ResultObjects" Version="1.0.1" />
       <PackageReference Include="MediatR" Version="12.5.0" />
       <PackageReference Include="MessageBroker.Abstractions" Version="2.0.1" />
