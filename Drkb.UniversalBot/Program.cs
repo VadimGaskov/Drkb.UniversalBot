@@ -2,6 +2,7 @@ using Drkb.JwtConfiguration.DI;
 using Drkb.UniversalBot.Infrastructure.Data;
 using Drkb.UniversalBot.Infrastructure.DI;
 using Drkb.UniversalBot.Infrastructure.LoggerConfiguration;
+using Drkb.UniversalBot.Infrastructure.Middleware;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 
@@ -61,6 +62,8 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseMiddleware<CheckMaxHeaderMiddleware>();
 
 app.MapControllerRoute(
     name: "default",

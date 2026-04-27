@@ -4,6 +4,7 @@ using Drkb.UniversalBot.Application.Interfaces;
 using Drkb.UniversalBot.Application.Interfaces.Authorization;
 using Drkb.UniversalBot.Application.Interfaces.Messagers;
 using Drkb.UniversalBot.Application.Interfaces.VkIntegration;
+using Drkb.UniversalBot.Application.UseCase.Command.Max.InitWebhook;
 using Drkb.UniversalBot.Domain.Entity.ValueObjects;
 using Drkb.UniversalBot.Infrastructure.Messengers;
 using Drkb.UniversalBot.Infrastructure.Messengers.Max;
@@ -35,6 +36,7 @@ public static class ServicesCollectionExtention
         });
         
         services.Configure<MaxOption>(configuration.GetSection("Max"));
+        services.AddHttpClient<IInitWebhookService, InitWebhookService>();
         
         services.Configure<FileSaverOptions>(configuration.GetSection("FileSaver"));
         services.AddHttpClient<IS3Service, S3Service>();

@@ -1,4 +1,4 @@
-namespace Drkb.UniversalBot.Application.Interfaces.MaxIntegration;
+namespace Drkb.UniversalBot.Application.Interfaces.Messagers;
 
 public interface IMaxClient
 {

@@ -1,4 +1,4 @@
-namespace Drkb.UniversalBot.Application.Interfaces.MaxIntegration.Options;
+namespace Drkb.UniversalBot.Infrastructure.Option;
 
 public class MaxOption
 {
