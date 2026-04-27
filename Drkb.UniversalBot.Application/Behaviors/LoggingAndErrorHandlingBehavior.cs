@@ -1,35 +1,45 @@
 ﻿using System.Reflection;
+using Drkb.ResultObjects;
 using Drkb.UniversalBot.Application.Interfaces;
 using Drkb.UniversalBot.Application.Interfaces.Authorization;
 using MediatR;
+using Microsoft.Extensions.Logging;
 
 namespace Drkb.UniversalBot.Application.Behaviors;
 
-public class LoggingAndErrorHandlingBehavior<TRequest, TResponse>: IPipelineBehavior<TRequest, TResponse>
+public class LoggingAndErrorHandlingBehavior<TRequest, TResponse>
+    : IPipelineBehavior<TRequest, TResponse>
+    where TResponse : IServerError<TResponse>
 {
-    private readonly ILoggerService _logger;
     private readonly ICurrentUserService _currentUser;
+    private readonly ILogger<LoggingAndErrorHandlingBehavior<TRequest, TResponse>> _logger;
 
-    public LoggingAndErrorHandlingBehavior(ILoggerService logger, ICurrentUserService currentUser)
+    public LoggingAndErrorHandlingBehavior(
+        ICurrentUserService currentUser,
+        ILogger<LoggingAndErrorHandlingBehavior<TRequest, TResponse>> logger)
     {
-        _logger = logger;
         _currentUser = currentUser;
+        _logger = logger;
     }
 
-    public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
+    public async Task<TResponse> Handle(
+        TRequest request,
+        RequestHandlerDelegate<TResponse> next,
+        CancellationToken cancellationToken)
     {
-        _logger.LogInformation($"Начало обработки {typeof(TRequest).Name} пользователем {_currentUser.UserId}");
         try
         {
-            var response = await next();
-            _logger.LogInformation($"Успешно обработано {typeof(TRequest).Name} пользователем {_currentUser.UserId}");
-            return response;
+            return await next(cancellationToken);
         }
         catch (Exception e)
         {
-            _logger.LogError($"Ошибка при обработке {typeof(TRequest).Name} пользователем {_currentUser.UserId}", e);
-            var method = typeof(TResponse).GetMethod("ServerError", BindingFlags.Public | BindingFlags.Static);
-            return (TResponse)method.Invoke(null, null);
+            _logger.LogError(e,
+                "Ошибка обработки запроса {RequestName} для пользователя {UserId}. Данные запроса: {@Request}",
+                typeof(TRequest).Name,
+                _currentUser.UserId,
+                request);
+
+            return TResponse.ServerError();
         }
     }
 }

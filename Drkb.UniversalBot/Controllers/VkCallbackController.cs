@@ -17,17 +17,14 @@ public class VkCallbackController : ControllerBase
 {
     private readonly VkOptions _options;
     private readonly IVkMessageService _vkMessageService;
-    private readonly ILoggerService _logger;
     private readonly IMediator _mediator;
 
     public VkCallbackController(
         IOptions<VkOptions> options,
-        IVkMessageService vkMessageService,
-        ILoggerService logger, IMediator mediator)
+        IVkMessageService vkMessageService,IMediator mediator)
     {
         _options = options.Value;
         _vkMessageService = vkMessageService;
-        _logger = logger;
         _mediator = mediator;
     }
     
@@ -38,14 +35,12 @@ public class VkCallbackController : ControllerBase
     {
         if (request.GroupId != _options.GroupId)
         {
-            _logger.LogWarning($"Invalid group id: {request.GroupId}");
             return BadRequest("invalid group_id");
         }
         
         if (!string.IsNullOrWhiteSpace(_options.Secret) &&
             !string.Equals(request.Secret, _options.Secret, StringComparison.Ordinal))
         {
-            _logger.LogWarning("Invalid callback secret");
             return BadRequest("invalid secret");
         }
 
@@ -63,7 +58,6 @@ public class VkCallbackController : ControllerBase
 
         if (!result.IsSuccess)
         {
-            _logger.LogInformation($"Unhandled VK event type: {request.Type}");
             return Content("ok");
         }
         return Content("ok");
